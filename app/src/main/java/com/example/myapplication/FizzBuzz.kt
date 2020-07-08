@@ -1,35 +1,55 @@
 import java.lang.NumberFormatException
+import kotlin.system.exitProcess
 
 
 fun main() {
-    fun setup() {
-        println("Welcome to FizzBuzz!")
-    }
-    setup()
-    var play = true
 
-    while (play) {
+    setup()
+
+    while (true) {
+        var to = getinput()
+        println(count(0, to))
+    }
+
+}
+
+
+fun getinput(): Int {
+    //Will only return integers greater than or equal to zero
+    var valid_input = false
+    var to = -1
+
+
+    while (valid_input == false) {
+        println("What number would you like to go to?")
+        var user_input = readLine()!!
         try {
-            println("What number would you like to go to?")
-            var user_input = readLine()!!
-            val to = user_input.toInt()
-            if (to < 0) {
+            to = user_input.toInt()
+            if (to >= 0) {
+                valid_input = true
+            } else {
                 println("You need to enter a number greater than or equal to zero!")
             }
-            print(count(0, to))
         } catch (e: NumberFormatException) {
-
             println("You need to enter a number!")
-
-            println("Would you like to quit? \nEnter Q if you do, anything else to keep playing.")
-            var user_input = readLine()
-            if (user_input == "Q" || user_input == "q") {
-                play = false
-            }
+            quit()
         }
 
     }
+    return (to)
+}
 
+fun quit() {
+    println("Would you like to quit? \nEnter Q if you do, anything else to keep playing.")
+    var user_input = readLine()
+    if (user_input == "Q" || user_input == "q") {
+        println("Goodbye!")
+        exitProcess(0)
+    }
+}
+
+fun setup() {
+    println("Welcome to FizzBuzz!")
 }
 
 fun count(from: Int, to: Int): String {
@@ -68,19 +88,7 @@ fun fizzbuzz(number: Int): String {
     }
     if (number.rem(17) == 0) {
         //A multiple of 17 reverses the order of all the words.
-        var length = (output.length) / 4
-        if (length != 0) {
-
-            val array: MutableList<String> = ArrayList()
-
-            for (i in 0..(length - 1)) {
-                array.add(output.slice(4 * i..4 * (i + 1) - 1))
-            }
-            output = ""
-            for (i in 0..(length - 1)) {
-                output = output + array[length - 1 - i]
-            }
-        }
+        output = reversestring(output, 4)
     }
 
     if (output == "") {
@@ -88,5 +96,24 @@ fun fizzbuzz(number: Int): String {
         output = number.toString()
     }
     return (output)
+}
+
+fun reversestring(text: String, block_size: Int): String {
+    var length = (text.length) / block_size
+    var function_output = ""
+
+    if (length != 0) {
+
+        val array: MutableList<String> = ArrayList()
+
+        for (i in 0..(length - 1)) {
+            array.add(text.slice(block_size * i..block_size * (i + 1) - 1))
+        }
+        for (i in 0..(length - 1)) {
+            function_output = function_output + array[length - 1 - i]
+        }
+
+    }
+    return (function_output)
 
 }
