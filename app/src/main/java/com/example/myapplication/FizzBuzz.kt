@@ -20,7 +20,7 @@ fun getinput(): Int {
     var to = -1
 
 
-    while (valid_input == false) {
+    while (!valid_input) {
         println("What number would you like to go to?")
         var user_input = readLine()!!
         try {
@@ -40,7 +40,7 @@ fun getinput(): Int {
 }
 
 fun quit() {
-    println("Would you like to quit? \nEnter Q if you do, anything else to keep playing.")
+    println("Would you like to quit? Enter Q if you do, anything else to keep playing.")
     var user_input = readLine()
     if (user_input == "Q" || user_input == "q") {
         println("Goodbye!")
